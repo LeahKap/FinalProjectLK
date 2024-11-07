@@ -10,7 +10,7 @@ TODO
 TODO
 
 ## In a paragraph or more, detail your project. What will your software do? What features will it have? How will it be executed?
-
+I am planning on using Python Turtle to create the playing pieces and write code for the game. The players will be able to interact with the game through input questions of where they want to put which playing piece. 
 TODO
 
 ## If planning to combine 1051's final project with another course's final project, with which other course? And which aspect(s) of your proposed project would relate to 1051, and which aspect(s) would relate to the other course?
@@ -38,4 +38,4 @@ Make a version of tic tac toe with 2 to 4 players and 3 size pieces.  These piec
 TODO
 
 ## In a paragraph or more, outline your next steps. What new skills will you need to acquire? What topics will you need to research? If working with one of two classmates, who will do what?
-I will need to figure out how to make my code sense winning patterns in turtle. 
+I will need to research how to make my code sense winning patterns. Meaning I will need to figure how can python turtle detect when certain parts are in certain patterns.
