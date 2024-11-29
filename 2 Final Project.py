@@ -158,26 +158,28 @@ def doesContainPiece(row, column, size, player):
 #check if there is winning pattern in a row
 def winnerrow(player):
     result= False
-    print('In winner row', player)
     for row in range(3):
         for size in SIZES:
             if all(doesContainPiece(row, j, size, player) for j in range(3)):
                 result= True
-                print('1 In winner row returns', result)
                 return result
-    print('2 In winner row returns', result)
     return result
     
 
 #check if there is a winning pattern in a coloumn
 def winnercolumn(player):
-    pass
+    result= False
+    for column in range(3):
+        for size in SIZES:
+            if all(doesContainPiece(i, column, size, player) for i in range(3)):
+                result= True
+                return result
+    return result
     
     
 #checks if there is a winner
 def iswinner(player):
     winner= False
-    print('In iswinner')
     for i in range(0,3):
         for j in range (0,3):
             if winnercell(i, j)==True:
@@ -186,7 +188,10 @@ def iswinner(player):
     if winnerrow(player)==True:
         winner=True
         return winner
-
+    if winnercolumn(player)==True:
+        winner=True
+        return winner
+    
     return winner
             
 
@@ -194,10 +199,3 @@ def iswinner(player):
             
     
 display()
-
-
-
-
-
-
-
