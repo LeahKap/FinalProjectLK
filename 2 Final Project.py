@@ -26,6 +26,7 @@ board=[[[],[],[]],
 SIZE_RADIUS = {"L":50,
                "M":30,
                "S":6}
+SIZES = SIZE_RADIUS.keys()
 PLAYER_COLORS={"0":colorplayer1,
        "1":colorplayer2}
 
@@ -80,7 +81,6 @@ def display():
     draw()
     player = 0
     while True: # main game loop
-        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -90,88 +90,11 @@ def display():
             res = makemove(str(player))
         draw()
         pygame.display.update()
-        if iswinner()==True:
+        if iswinner(str(player))==True:
             print("Player", player, 'WON!!!')
             break
         player = (player + 1) % 2
     
-
-def display2():
-    pygame.init()
-    DISPLAYSURF = pygame.display.set_mode((windowwidth, windowheight))
-    DISPLAYSURF.fill(wood)
-
-#circles on board
-    pygame.font.init()  
-    my_font = pygame.font.SysFont('Arial Bold', 30)
-    text_surface1 = my_font.render('0', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface1, (210,10))
-    text_surface2 = my_font.render('1', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface2, (335,10))
-    text_surface2 = my_font.render('2', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface2, (465,10))
-    text_surface1 = my_font.render('0', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface1, (130,90))
-    text_surface2 = my_font.render('1', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface2, (130,220))
-    text_surface2 = my_font.render('2', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface2, (130, 350))
-#first row
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 90), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 90), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 90), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 90), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 90), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 90), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 90), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 90), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 90), 6, 0)
-
-#second row
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 220), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 220), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 220), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 220), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 220), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 220), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 220), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 220), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 220), 6, 0)
-
-#third row
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 350), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 350), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (215, 350), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 350), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 350), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (345, 350), 6, 0)
-
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 350), 50, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 350), 30, 8)
-    pygame.draw.circle(DISPLAYSURF, colorboardrings, (475, 350), 6, 0)
-
-    pygame.font.init()  
-    my_font = pygame.font.SysFont('Arial Bold', 30)
-
-    text_surface1 = my_font.render('Player 1', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface1, (30,15))
-    text_surface2 = my_font.render('Player 2', False, (0, 0, 0))
-    DISPLAYSURF.blit(text_surface2, (585,15))
-
-
-    pygame.display.set_caption('Otrio')
-
-    while True: # main game loop
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-        pygame.display.update()
 
 #check if spot is occupied already
 def occupied(size, row, column):
@@ -202,7 +125,7 @@ def makemove(player):
 #checks if input is valid, correct letter and number input
 def validmove(size,row,column):
     result= False
-    if size in ["S","M","L"] and row>=0 and row<=2 and column>=0 and column<=2 and occupied(size, row, column)==False:
+    if size in SIZES and row>=0 and row<=2 and column>=0 and column<=2 and occupied(size, row, column)==False:
         result=True
     return result
 
@@ -220,38 +143,61 @@ def winnercell(row, column):
     
     return result
 
+
+def doesContainPiece(row, column, size, player):
+    found = False
+    values = board[row][column]
+    for val in values:
+        if val["player"]==player and val["size"]==size:
+            found = True
+            break
+
+    return found
+        
+
 #check if there is winning pattern in a row
-def winnerrow(size,column):
+def winnerrow(player):
     result= False
-    
+    print('In winner row', player)
+    for row in range(3):
+        for size in SIZES:
+            if all(doesContainPiece(row, j, size, player) for j in range(3)):
+                result= True
+                print('1 In winner row returns', result)
+                return result
+    print('2 In winner row returns', result)
+    return result
     
 
 #check if there is a winning pattern in a coloumn
-def winnercolumn(size,row):
+def winnercolumn(player):
     pass
     
     
 #checks if there is a winner
-def iswinner():
+def iswinner(player):
     winner= False
+    print('In iswinner')
     for i in range(0,3):
         for j in range (0,3):
             if winnercell(i, j)==True:
                 winner=True
                 return winner
+    if winnerrow(player)==True:
+        winner=True
+        return winner
 
     return winner
             
 
 
-         
-"""def game():
-    for i in range(0,3):
-        for j in range(0,3):
-            board[i][j]=[]
             
-game()
-print(board)"""
     
 display()
-#validmove(size,row,column)
+
+
+
+
+
+
+
