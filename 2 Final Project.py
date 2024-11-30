@@ -75,7 +75,7 @@ def draw():
     DISPLAYSURF.blit(text_surface2, (585,15))
 
 
-    pygame.display.set_caption('Otrio')
+    pygame.display.set_caption('OOOtrio')
     
 def display():
     draw()
