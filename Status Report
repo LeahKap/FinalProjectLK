@@ -1,0 +1,28 @@
+# Status Report
+
+Name: 
+Leah Kaplunovich
+
+
+#### Your section leader's name:
+Dr.Rosen
+
+#### Project title: 
+OOOtrio
+
+***
+
+Short answers for the below questions suffice. If you want to alter your plan for your project (and obtain approval for the same), be sure to email your section leader directly!
+
+#### What have you done for your project so far?
+
+I have created majority of my project. I made code that allows 2 players to use inputs to play Otrio and see visual represenation of the board using pygame. Then the game ends when one of the players achieves a winning pattern (same size in a row, same size in a column, all sizes in one cell). 
+
+#### What have you not done for your project yet?
+
+I need to improve my game by creating and changing the screen to "player # won" when one of the players wins. Also if possible show display before an input is put in, but I'm not sure thats possible with how I set up my code.   
+
+#### What problems, if any, have you encountered?
+
+Figuring out how to make it possible for players to put their pieces where they want was very diffcult. I initially attempted to use the mouse but unfortunately that was beyond my capabilties espcially with the board type and 2 players. I resolved this by using inputs. 
+
