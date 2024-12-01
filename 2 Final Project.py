@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 
-wood= (200,250,50)
+wood= (200,250,50) #lime
 boardwidth= 3
 boardheight= 3
 spacesize=50
@@ -12,7 +12,7 @@ ymargin = int((windowheight - boardheight * spacesize) / 2)
 colorboardrings= (0,0,240)#blue
 colorplayer1= (250,0,0)#red
 colorplayer2= (128,0,128)#purple
-blue=(0,240,0)#lime
+blue=(20,240,100)#green
 #board
 board=[[[{"size":"L","row":0,"column":0,"player":"1"}],[],[]],
        [[{"size":"S","row":1,"column":0,"player":"0"}],[],[{"size":"M","row":1,"column":0,"player":"1"}]],
@@ -71,12 +71,28 @@ def draw():
 
     text_surface1 = my_font.render('Player 0', False, (0, 0, 0))
     DISPLAYSURF.blit(text_surface1, (30,15))
+    pygame.draw.circle(DISPLAYSURF,colorplayer1,(65,85), 30,0)
+
+    
     text_surface2 = my_font.render('Player 1', False, (0, 0, 0))
     DISPLAYSURF.blit(text_surface2, (585,15))
+    pygame.draw.circle(DISPLAYSURF,colorplayer2,(620,85), 30,0)
 
 
     pygame.display.set_caption('OOOtrio')
-    
+
+def winnerscreen():
+    pygame.init()
+    DISPLAYSURF = pygame.display.set_mode((windowwidth, windowheight))
+    DISPLAYSURF.fill(blue)
+    pygame.font.init()  
+    my_font = pygame.font.SysFont('Arial Bold', 100)
+    text_surface1 = my_font.render("Game Over", False, wood )
+    DISPLAYSURF.blit(text_surface1, (50,50))
+    pygame.display.update()
+
+
+
 def display():
     draw()
     player = 0
@@ -92,6 +108,8 @@ def display():
         pygame.display.update()
         if iswinner(str(player))==True:
             print("Player", player, 'WON!!!')
+            #just added
+            winnerscreen()
             break
         player = (player + 1) % 2
     
@@ -199,3 +217,10 @@ def iswinner(player):
             
     
 display()
+
+
+
+
+
+
+
